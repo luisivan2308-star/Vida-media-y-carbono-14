@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vida media y carbono-14 | FIME – UANL</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--tx:#1d2433;--mu:#5b6578;--ac:#1f6feb;--rd:#d6336c;--gr:#2f9e44;--bd:#dde3ee}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+header{background:#12264d;color:#fff;padding:18px 16px}
+header h1{margin:0;font-size:1.4rem}header p{margin:4px 0 0;opacity:.85;font-size:.9rem}
+main{max-width:1000px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:1.1rem}
+.badge{display:inline-block;background:var(--ac);color:#fff;border-radius:6px;padding:1px 8px;font-size:.75rem;margin-right:6px}
+.eq{background:#eef3ff;border-left:4px solid var(--ac);padding:8px 12px;margin:8px 0;font-family:Cambria,'Times New Roman',serif;font-size:1.05rem;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}td,th{border:1px solid var(--bd);padding:5px 8px;text-align:left}th{background:#f0f3f9}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{display:block;font-size:.85rem;color:var(--mu);margin-bottom:3px}
+input[type=number]{width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;font-size:1rem}
+input[type=range]{width:100%}
+button{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:9px 14px;font-size:.9rem;cursor:pointer;margin:4px 6px 0 0}
+button.sec{background:#e6ebf5;color:var(--tx)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.m{background:#f7f9fd;border:1px solid var(--bd);border-radius:10px;padding:10px}
+.m small{color:var(--mu);display:block;font-size:.75rem}.m b{font-size:1.1rem}
+.m.big{background:#fff0f5;border-color:#f3b5cb}.m.big b{color:var(--rd)}
+canvas{width:100%;display:block;background:#fff;border:1px solid var(--bd);border-radius:10px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.row{grid-template-columns:1fr}}
+#tl{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.seg{flex:1 1 90px;border:1px solid var(--bd);border-radius:8px;padding:6px;text-align:center;font-size:.8rem;background:#fafbfe}
+.seg.on{border-color:var(--ac);background:#e3eeff;font-weight:600}
+.bar{height:8px;background:#e6ebf5;border-radius:4px;margin-top:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.warn{color:var(--rd);font-size:.85rem;min-height:1.2em}
+ul{margin:6px 0;padding-left:20px}
+.step{margin:6px 0}
+footer{text-align:center;color:var(--mu);font-size:.8rem;padding:10px 16px 24px}
+</style>
+</head>
+<body>
+<header>
+<h1>Vida media y carbono-14</h1>
+<p>FIME – UANL · Ecuaciones Diferenciales · Actividad 6 · Modelo: desintegración radiactiva</p>
+<p style="margin-top:10px;font-weight:600">Somos el Equipo 11</p>
+<p style="margin-top:2px">Integrantes:<br>
+Escobedo Hernández Karla Isabel — 2181873<br>
+Aguirre Salas Leonardo Daniel — 2182076<br>
+Rivera Rodríguez Luis Iván — 2196452<br>
+Sánchez Méndez Nidia Verónica — 2205053<br>
+Domínguez Sánchez Francisco Agumar — 2276191<br>
+Galván Ávila Estrella Amairani — 2276446</p>
+</header>
+<main>
+
+<section class="card">
+<h2><span class="badge">1</span>LEER</h2>
+<p>El carbono-14 se desintegra a una velocidad proporcional a la cantidad presente. Su vida media es de <b>5600 años</b>. Un fragmento de una pata de silla de la tumba de Tutankamón contiene el <b>66.3 %</b> del carbono-14 original. <b>¿Cuál es la edad del fragmento?</b></p>
+<p style="color:var(--mu);font-size:.9rem;margin:0">Fenómeno: mientras vive, un organismo incorpora C-14; al morir deja de hacerlo y el C-14 acumulado decae. Al medir cuánto queda, se infiere cuánto tiempo ha pasado.</p>
+</section>
+
+<section class="card">
+<h2><span class="badge">2</span>MODELAR</h2>
+<table>
+<tr><th>Elemento</th><th>Descripción</th></tr>
+<tr><td>Variable independiente</td><td><i>t</i>: tiempo transcurrido desde la muerte del organismo (años)</td></tr>
+<tr><td>Variable dependiente</td><td><i>Y(t)</i>: cantidad de C-14 presente en el tiempo <i>t</i> (unidades de masa o átomos)</td></tr>
+<tr><td>Parámetros</td><td><i>k</i>: constante de desintegración (año⁻¹); <i>t½</i>: vida media (años)</td></tr>
+<tr><td>Condición inicial</td><td>Y(0) = Y₀ (cantidad inicial)</td></tr>
+</table>
+<div class="eq">dY/dt = −k·Y, &nbsp; Y(0) = Y₀</div>
+<p style="margin:0;font-size:.9rem;color:var(--mu)">El signo negativo indica que Y disminuye; la rapidez de pérdida es proporcional a lo que hay (cuanto más C-14, más átomos decaen por unidad de tiempo).</p>
+</section>
+
+<section class="card">
+<h2><span class="badge">3</span>SIMULAR</h2>
+<div class="ctrl">
+<div><label for="th">Vida media t½ (años)</label><input type="number" id="th" value="5600" min="0.0001" step="any"></div>
+<div><label for="pct">Porcentaje restante (%)</label><input type="number" id="pct" value="66.3" min="0.0001" max="100" step="any"></div>
+<div><label for="y0">Cantidad inicial Y₀</label><input type="number" id="y0" value="100" min="0.0001" step="any"></div>
+<div><label for="tt">Tiempo t (años)</label><input type="number" id="tt" value="0" min="0" step="any"></div>
+</div>
+<div style="margin-top:10px"><label for="ts">Mover el tiempo t: <b id="tlab"></b></label><input type="range" id="ts" min="0" max="1" step="any" value="0"></div>
+<div class="warn" id="warn"></div>
+<button id="bEdad">Ir a la edad estimada</button>
+<button class="sec" id="bOrig">Problema original (Tutankamón)</button>
+<button class="sec" id="bAnim">▶ Animar</button>
+
+<div class="out">
+<div class="m"><small>Constante k (año⁻¹)</small><b id="oK"></b></div>
+<div class="m"><small>Vida media t½</small><b id="oT"></b></div>
+<div class="m big"><small>Edad estimada (con % restante)</small><b id="oAge"></b></div>
+<div class="m"><small>Tiempo t elegido</small><b id="oT2"></b></div>
+<div class="m"><small>C-14 restante Y(t)</small><b id="oY"></b></div>
+<div class="m"><small>Porcentaje restante en t</small><b id="oP"></b></div>
+<div class="m"><small>Rapidez dY/dt = −k·Y(t) (unidades/año)</small><b id="oD"></b></div>
+</div>
+
+<h3 style="margin:16px 0 6px;font-size:1rem">Gráfica de desintegración Y(t) = Y₀·e<sup>−kt</sup></h3>
+<canvas id="graf" height="320"></canvas>
+
+<div class="row" style="margin-top:14px">
+<div>
+<h3 style="margin:0 0 6px;font-size:1rem">Partículas de C-14 (400 átomos)</h3>
+<canvas id="part" height="260"></canvas>
+<small style="color:var(--mu)">Azul: sin desintegrar. Gris: ya desintegrados.</small>
+</div>
+<div>
+<h3 style="margin:0 0 6px;font-size:1rem">Línea de tiempo por vidas medias</h3>
+<div id="tl"></div>
+</div>
+</div>
+</section>
+
+<section class="card">
+<h2><span class="badge">4</span>RESOLVER</h2>
+<div class="step"><b>Paso 1. Separar variables e integrar:</b>
+<div class="eq">dY/Y = −k dt ⟹ ln|Y| = −kt + C ⟹ Y(t) = Y₀·e<sup>−kt</sup></div></div>
+<div class="step"><b>Paso 2. Hallar k con la vida media</b> (Y(t½) = Y₀/2):
+<div class="eq" id="s2"></div></div>
+<div class="step"><b>Paso 3. Despejar el tiempo</b> con Y/Y₀ = P:
+<div class="eq" id="s3"></div></div>
+</section>
+
+<section class="card">
+<h2><span class="badge">5</span>INTERPRETAR</h2>
+<ul id="interp"></ul>
+</section>
+</main>
+<footer>Simulador para la Actividad Integradora · Modelo Y(t) = Y₀e<sup>−kt</sup> con k = ln 2 / t½<br>
+Se utilizó IA como apoyo para programar el simulador; el equipo verificó las ecuaciones, los valores y los resultados.
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = (x, d = 2) => x.toLocaleString('es-MX', {maximumFractionDigits: d});
+let tv = 0, anim = null;
+
+// Orden pseudoaleatorio fijo para que los átomos "decaigan" de forma repartida
+const N = 400, rank = new Array(N);
+(function () {
+  const idx = [...Array(N).keys()]; let s = 12345;
+  for (let i = N - 1; i > 0; i--) { s = (s * 1664525 + 1013904223) % 4294967296; const j = s % (i + 1); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  idx.forEach((pos, r) => rank[pos] = r);
+})();
+
+function read() {
+  const T = parseFloat($('th').value), P = parseFloat($('pct').value), Y0 = parseFloat($('y0').value);
+  let msg = '';
+  if (!(T > 0)) msg = 'La vida media debe ser mayor que 0.';
+  else if (!(P > 0 && P <= 100)) msg = 'El porcentaje restante debe estar en (0, 100].';
+  else if (!(Y0 > 0)) msg = 'La cantidad inicial debe ser mayor que 0.';
+  $('warn').textContent = msg;
+  return msg ? null : {T, P, Y0};
+}
+
+function update() {
+  const p = read(); if (!p) return;
+  const {T, P, Y0} = p;
+  const k = Math.LN2 / T;                       // k = ln2 / t½
+  const age = Math.log(100 / P) / k;            // t = ln(100/P)/k
+  const tmax = Math.max(5 * T, age * 1.25);
+  tv = Math.min(Math.max(tv, 0), tmax);
+  const ts = $('ts'); ts.max = tmax; ts.step = tmax / 2000; ts.value = tv;
+  if (document.activeElement !== $('tt')) $('tt').value = +tv.toPrecision(8);
+  $('tlab').textContent = fmt(tv, 1) + ' años';
+
+  const Yt = Y0 * Math.exp(-k * tv), Pt = 100 * Yt / Y0;
+  $('oK').textContent = k.toExponential(4);
+  $('oT').textContent = fmt(T, 2) + ' años';
+  $('oAge').textContent = fmt(age, 0) + ' años';
+  $('oT2').textContent = fmt(tv, 1) + ' años';
+  $('oY').textContent = fmt(Yt, 4);
+  $('oP').textContent = fmt(Pt, 3) + ' %';
+  $('oD').textContent = (-k * Yt).toExponential(3);   // dY/dt = -k·Y(t)
+
+  $('s2').innerHTML = `e<sup>−k·${fmt(T,2)}</sup> = 1/2 ⟹ k = ln 2 / t½ = 0.693147 / ${fmt(T,2)} = <b>${k.toExponential(4)} año⁻¹</b>`;
+  $('s3').innerHTML = `${P/100} = e<sup>−kt</sup> ⟹ t = −ln(${P/100}) / k = ${fmt(-Math.log(P/100),5)} / ${k.toExponential(4)} = <b>${fmt(age,1)} años</b>`;
+
+  drawGraph(T, P, Y0, k, age, tmax);
+  drawParticles(Pt);
+  drawTimeline(T, tmax);
+  interpret(T, P, age, Pt);
+}
+
+function drawGraph(T, P, Y0, k, age, tmax) {
+  const c = $('graf'), dpr = window.devicePixelRatio || 1, w = c.clientWidth, h = 320;
+  c.width = w * dpr; c.height = h * dpr;
+  const g = c.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+  const L = 58, R = 14, Tp = 14, B = 40;
+  const X = x => L + x / tmax * (w - L - R), Y = y => Tp + (1 - y / Y0) * (h - Tp - B);
+  g.font = '11px system-ui'; g.fillStyle = '#5b6578'; g.strokeStyle = '#e3e8f1'; g.lineWidth = 1;
+  // rejilla horizontal
+  for (let i = 0; i <= 4; i++) {
+    const y = Y0 * i / 4; g.beginPath(); g.moveTo(L, Y(y)); g.lineTo(w - R, Y(y)); g.stroke();
+    g.textAlign = 'right'; g.fillText(fmt(y, 1), L - 6, Y(y) + 4);
+  }
+  // marcas de vidas medias
+  const n = Math.floor(tmax / T), step = Math.max(1, Math.ceil(n / 8));
+  g.setLineDash([4, 4]); g.textAlign = 'center';
+  for (let i = 1; i <= n; i += step) {
+    g.strokeStyle = '#b8c4dc'; g.beginPath(); g.moveTo(X(i * T), Tp); g.lineTo(X(i * T), h - B); g.stroke();
+    g.fillStyle = '#5b6578'; g.fillText(i + ' t½', X(i * T), h - B + 14);
+  }
+  g.setLineDash([]);
+  // ejes
+  g.strokeStyle = '#1d2433'; g.beginPath(); g.moveTo(L, Tp); g.lineTo(L, h - B); g.lineTo(w - R, h - B); g.stroke();
+  g.fillStyle = '#1d2433'; g.textAlign = 'center';
+  g.fillText('tiempo t (años)', (L + w - R) / 2, h - 6);
+  g.save(); g.translate(12, (Tp + h - B) / 2); g.rotate(-Math.PI / 2); g.fillText('Y(t)', 0, 0); g.restore();
+  g.textAlign = 'center'; g.fillStyle = '#5b6578';
+  [0, tmax].forEach(x => g.fillText(fmt(x, 0), X(x), h - B + 28));
+  // curva
+  g.strokeStyle = '#1f6feb'; g.lineWidth = 2.5; g.beginPath();
+  for (let i = 0; i <= 300; i++) { const x = tmax * i / 300, y = Y0 * Math.exp(-k * x); i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)); }
+  g.stroke();
+  // edad estimada
+  const ya = Y0 * P / 100;
+  g.setLineDash([5, 4]); g.strokeStyle = '#d6336c'; g.lineWidth = 1.2;
+  g.beginPath(); g.moveTo(L, Y(ya)); g.lineTo(X(age), Y(ya)); g.lineTo(X(age), h - B); g.stroke(); g.setLineDash([]);
+  g.fillStyle = '#d6336c'; g.beginPath(); g.arc(X(age), Y(ya), 5, 0, 7); g.fill();
+  g.textAlign = 'left'; g.fillText(`edad ≈ ${fmt(age, 0)} años (${fmt(P, 1)} %)`, Math.min(X(age) + 8, w - 190), Y(ya) - 8);
+  // tiempo elegido
+  const yt = Y0 * Math.exp(-k * tv);
+  g.fillStyle = '#2f9e44'; g.beginPath(); g.arc(X(tv), Y(yt), 6, 0, 7); g.fill();
+}
+
+function drawParticles(Pt) {
+  const c = $('part'), dpr = window.devicePixelRatio || 1, w = c.clientWidth, h = 260;
+  c.width = w * dpr; c.height = h * dpr;
+  const g = c.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+  const cols = 25, rows = 16, cw = w / cols, ch = h / rows, r = Math.min(cw, ch) * 0.32;
+  const alive = Math.round(N * Pt / 100);
+  for (let i = 0; i < N; i++) {
+    const x = (i % cols + 0.5) * cw, y = (Math.floor(i / cols) + 0.5) * ch;
+    g.fillStyle = rank[i] < alive ? '#1f6feb' : '#d5dae4';
+    g.beginPath(); g.arc(x, y, r, 0, 7); g.fill();
+  }
+}
+
+function drawTimeline(T, tmax) {
+  const el = $('tl'); el.innerHTML = '';
+  const cur = Math.floor(tv / T + 1e-9), last = Math.min(Math.ceil(tmax / T), 8);
+  for (let i = 0; i <= last; i++) {
+    const f = Math.pow(0.5, i) * 100, d = document.createElement('div');
+    d.className = 'seg' + (i === cur ? ' on' : '');
+    d.innerHTML = `${i} t½<br>${fmt(i * T, 0)} años<br>${fmt(f, 2)} %<div class="bar"><i style="width:${f}%"></i></div>`;
+    el.appendChild(d);
+  }
+}
+
+function interpret(T, P, age, Pt) {
+  const nh = age / T;
+  $('interp').innerHTML =
+    `<li>Que quede el <b>${fmt(P, 1)} %</b> significa que se ha desintegrado el ${fmt(100 - P, 1)} % del C-14 original; equivale a ${fmt(nh, 3)} vidas medias transcurridas.</li>` +
+    `<li>Tras <b>una vida media</b> (${fmt(T, 0)} años) queda el 50 %; tras <b>dos</b> (${fmt(2 * T, 0)} años) queda el 25 %. Cada periodo reduce a la mitad lo que había.</li>` +
+    `<li>Para estimar la edad se mide el porcentaje restante, se calcula k con la vida media y se despeja t = −ln(Y/Y₀)/k. Resultado actual: <b>≈ ${fmt(age, 0)} años</b>.</li>` +
+    `<li>Con el tiempo elegido (${fmt(tv, 0)} años) queda el <b>${fmt(Pt, 2)} %</b>. Si aumentas t½, el decaimiento es más lento y la misma proporción corresponde a una edad mayor.</li>` +
+    `<li>La rapidez de desintegración dY/dt = −k·Y es proporcional a lo que queda: conforme Y(t) disminuye, el C-14 se pierde cada vez más despacio.</li>`;
+}
+
+// Eventos
+['th', 'pct', 'y0'].forEach(id => $(id).addEventListener('input', update));
+$('ts').addEventListener('input', e => { tv = parseFloat(e.target.value); stop(); update(); });
+$('tt').addEventListener('input', e => { const v = parseFloat(e.target.value); if (v >= 0) { tv = v; stop(); update(); } });
+$('bEdad').onclick = () => { const p = read(); if (!p) return; stop(); tv = Math.log(100 / p.P) * p.T / Math.LN2; update(); };
+$('bOrig').onclick = () => { stop(); $('th').value = 5600; $('pct').value = 66.3; $('y0').value = 100; tv = Math.log(100 / 66.3) * 5600 / Math.LN2; update(); };
+function stop() { if (anim) { cancelAnimationFrame(anim); anim = null; $('bAnim').textContent = '▶ Animar'; } }
+$('bAnim').onclick = () => {
+  if (anim) { stop(); return; }
+  const p = read(); if (!p) return;
+  $('bAnim').textContent = '⏸ Pausar';
+  tv = 0; let last = null;
+  const f = ts => {
+    if (last === null) last = ts;
+    const tmax = parseFloat($('ts').max);
+    tv += (ts - last) / 6000 * tmax; last = ts;
+    if (tv >= tmax) { tv = tmax; update(); stop(); return; }
+    update(); anim = requestAnimationFrame(f);
+  };
+  anim = requestAnimationFrame(f);
+};
+window.addEventListener('resize', update);
+
+// Estado inicial: problema original
+tv = Math.log(100 / 66.3) * 5600 / Math.LN2;
+update();
+</script>
+</body>
+</html>
